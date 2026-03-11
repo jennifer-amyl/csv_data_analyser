@@ -1,0 +1,59 @@
+import pandas as pd
+
+input_file = "sample_data.csv"
+cleaned_file = "cleaned_data.csv"
+report_file = "report.txt"
+
+print(f"Reading file: {input_file}")
+
+try:
+    df = pd.read_csv(input_file)
+except FileNotFoundError:
+    print(f"Error: '{input_file}' was not found.")
+    raise SystemExit
+
+print("\nColumn names:")
+for column in df.columns:
+    print(column)
+
+print(f"\nRows: {df.shape[0]}")
+print(f"Columns: {df.shape[1]}")
+
+missing_values = df.isnull().sum()
+duplicate_count = df.duplicated().sum()
+
+print("\nMissing values per column:")
+print(missing_values)
+
+print(f"\nDuplicate rows: {duplicate_count}")
+
+df_cleaned = df.drop_duplicates()
+
+print("\nSummary statistics:")
+print(df_cleaned.describe(include="all"))
+
+cleaned_file = "cleaned_data.csv"
+df_cleaned.to_csv(cleaned_file, index=False, sep=";")
+
+with open(report_file, "w", encoding="utf-8") as file:
+    file.write("CSV Data Analysis Report\n")
+    file.write("========================\n\n")
+
+    file.write("Column names:\n")
+    for column in df.columns:
+        file.write(f"- {column}\n")
+
+    file.write(f"\nRows: {df.shape[0]}\n")
+    file.write(f"Columns: {df.shape[1]}\n")
+
+    file.write("\nMissing values per column:\n")
+    for column, count in missing_values.items():
+        file.write(f"{column}: {count}\n")
+
+    file.write(f"\nDuplicate rows: {duplicate_count}\n")
+
+    file.write("\nSummary statistics:\n")
+    file.write(df_cleaned.describe(include="all").to_string())
+
+print(f"\nSaved cleaned CSV to {cleaned_file}")
+print(f"Saved report to {report_file}")

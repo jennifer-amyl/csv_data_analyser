@@ -1,0 +1,20 @@
+CSV Data Analysis Report
+========================
+
+Column names:
+- Name	Department	Salary	Years Experience
+
+Rows: 10
+Columns: 1
+
+Missing values per column:
+Name	Department	Salary	Years Experience: 0
+
+Duplicate rows: 1
+
+Summary statistics:
+       Name\tDepartment\tSalary\tYears Experience
+count                                           9
+unique                                          9
+top                  Steve\tEngineering\t35000\t2
+freq                                            1
